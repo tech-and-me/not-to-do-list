@@ -1,8 +1,17 @@
+body{
+    color: white;
+}
+
 .wrapper{
-    background: rgb(189, 130, 245);
+    background: rgb(72, 17, 122);
     min-height: 100vh;
 }
 
+
+
+h1{
+    text-transform: uppercase;
+}
 
 td button{
     margin: auto 10px;

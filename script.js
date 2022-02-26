@@ -4,8 +4,7 @@ let totalHours = [];
 let badHours = [];
 let taskListElm = document.getElementById("task-list");
 let badListElm = document.getElementById("bad-list");
-// const weekHrs = 11;
-// let taskListElm = document.getElementsByClassName("task-list");
+const weekHrs = 105;
 
 
 const handleOnSubmit = e => {
@@ -21,18 +20,22 @@ const handleOnSubmit = e => {
         task,
         hr
     }
-    taskList.push(obj);
-
-    // const ttlHr = taskTotalHrs() + badTotalHrs();
-    // if(ttlHr + hr > weekHrs){
-    //     return alert("You have exceeded the weekly hours");
-    // }
-
+    let ttlHr = taskTotalHrs();
+    if (hr<=0){
+        return alert("Hours should be greater than zero.");
+    }
+    else if(ttlHr == weekHrs){
+        return alert("You have alread allocated the maximum hours for the week. Please consider delete some tasks to be able to add new task.");
+    }
+    else if(ttlHr + hr > weekHrs){
+        return alert(`maximum hours you could enter is ${weekHrs-ttlHr}`);
+    }
+    else{
+        taskList.push(obj);
+    }
     console.log(obj);
     // console.log(task-list);
     display();
-
-    
 };
 
 
@@ -49,8 +52,8 @@ const display = () =>{
                 <td>
                     <input type="checkbox">
                 </td>
-                <td>${item.task}</td>
-                <td>${item.hr} hours</td>
+                <td class="text-light">${item.task}</td>
+                <td class="text-light">${item.hr} hours</td>
                 <td>
                     <button class="btn btn-danger" onclick ="deleteTaskList(${index})"><i class="fa-solid fa-trash-can"></i></button>
                     <button class="btn btn-primary" onclick = "markAsNotToDo(${index})"><i class="fa-solid fa-arrow-right-long"></i></button>
@@ -79,8 +82,8 @@ const displayBadList = () => {
                 <td>
                     <input type="checkbox">
                 </td>
-                <td>${item.task}</td>
-                <td>${item.hr}hrs</td>
+                <td class="text-light">${item.task}</td>
+                <td class="text-light">${item.hr}hrs</td>
                 <td>
                     <button class="btn btn-warning" onclick="markAsToDo(${index})"><i class="fa-solid fa-arrow-left-long"></i></button>
                     <button class="btn btn-danger" onclick="deleteBadList(${index})"><i class="fa-solid fa-trash-can"></i></button>
