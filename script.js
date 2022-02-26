@@ -110,7 +110,6 @@ const deleteTaskList = i =>{
     // i here represent index of the trash can item that was clicked.
     display();
     return itm[0];
-    taskTotalHrs();
 }
 
 //delete item from bad list
