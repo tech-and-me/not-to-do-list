@@ -1,7 +1,10 @@
 const taskList = [];
 const badList = [];
+let totalHours = [];
+let badHours = [];
 let taskListElm = document.getElementById("task-list");
 let badListElm = document.getElementById("bad-list");
+// const weekHrs = 11;
 // let taskListElm = document.getElementsByClassName("task-list");
 
 
@@ -10,6 +13,7 @@ const handleOnSubmit = e => {
     const task = frmDt.get('task');
     const hr = +frmDt.get('hr');
     console.log(task,hr);
+    
     // console.log(frmDt);
     const obj = {
         // task : task,
@@ -18,17 +22,25 @@ const handleOnSubmit = e => {
         hr
     }
     taskList.push(obj);
+
+    // const ttlHr = taskTotalHrs() + badTotalHrs();
+    // if(ttlHr + hr > weekHrs){
+    //     return alert("You have exceeded the weekly hours");
+    // }
+
     console.log(obj);
     // console.log(task-list);
     display();
+
+    
 };
+
 
 
 //Display task list in the DOM
 const display = () =>{
     //clear the dom
     let str = ''
-
 
     // loop through the task list and convert in to tr string
     taskList.map((item,index)=>{
@@ -48,6 +60,10 @@ const display = () =>{
     });
 
     taskListElm.innerHTML = str;
+
+    // console.log(innitialVal);
+
+    taskTotalHrs();
 
 
 }   // end of const display method
@@ -76,6 +92,9 @@ const displayBadList = () => {
     })
 
     badListElm.innerHTML = str;
+    // console.log(innitialVal);
+    badTotalHrs();
+    taskTotalHrs();
 
 }
 
@@ -88,6 +107,7 @@ const deleteTaskList = i =>{
     // i here represent index of the trash can item that was clicked.
     display();
     return itm[0];
+    taskTotalHrs();
 }
 
 //delete item from bad list
@@ -107,21 +127,33 @@ const markAsNotToDo = i => {
     // console.log(i);
     const  badItem = deleteTaskList(i);
     badList.push(badItem);
-
     displayBadList();
 }
 
 //transfer item back to to-do list
 const markAsToDo = i => {
     // console.log(i);
-    const  badItem = deleteBadList(i);
-    taskList.push(badItem);
-    
+    const  goodItem = deleteBadList(i);
+    taskList.push(goodItem);
     display();
 }
 
 
+const taskTotalHrs = () => {
+    const badhrs = badTotalHrs();
+    const innitialVal = 0;
+    totalHours = taskList.reduce((accumVal,item) => accumVal + item.hr,innitialVal); 
+    totalHours = totalHours + badhrs;
+    console.log(totalHours);
+    document.getElementById("total-hours").innerText = totalHours;
+    return totalHours;
+}
 
 
-
-
+const badTotalHrs = () => {
+    const innitialVal = 0;
+    totalBadHours = badList.reduce((accumVal,item) => accumVal + item.hr,innitialVal); 
+    console.log(totalBadHours);
+    document.getElementById("bad-hr").innerText = totalBadHours;
+    return totalBadHours;
+}
